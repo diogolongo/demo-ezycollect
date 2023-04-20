@@ -1,16 +1,309 @@
 {
-  "openapi": "3.0.3",
-  "info": {
-    "title": "$Title$",
-    "description": "$Title$",
-    "version": "1.0.0"
-  },
+  "openapi": "3.0.1",
   "servers": [
     {
-      "url": "$https$"
+      "url": "http://localhost:8080",
+      "description": "server url"
     }
   ],
   "paths": {
-    $END$
+    "/api/contacts/{id}": {
+      "get": {
+        "tags": [
+          "contact-resource"
+        ],
+        "operationId": "get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactDTO"
+                },
+                "example": {
+                  "id": 10,
+                  "firstName": "Diogo",
+                  "lastName": "Longo",
+                  "phoneNumber": "1112223333"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "example": {
+                  "cause": null,
+                  "stackTrace": [
+                    {
+                      "classLoaderName": null,
+                      "moduleName": null,
+                      "moduleVersion": null,
+                      "methodName": "checkDuplicated",
+                      "fileName": "ContactService.java",
+                      "lineNumber": 63,
+                      "nativeMethod": false,
+                      "className": "io.ezycollect.demo.service.ContactService"
+                    }
+                  ],
+                  "type": "about:blank",
+                  "title": "Duplicated phone number",
+                  "status": "BAD_REQUEST",
+                  "detail": null,
+                  "instance": null,
+                  "parameters": {},
+                  "message": "Duplicated phone number",
+                  "suppressed": [],
+                  "localizedMessage": "Duplicated phone number"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "contact-resource"
+        ],
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "contactDTO",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ContactDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactDTO"
+                },
+                "example": {
+                  "id": 10,
+                  "firstName": "Diogo",
+                  "lastName": "Longo",
+                  "phoneNumber": "1112223333"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "contact-resource"
+        ],
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/contacts/": {
+      "get": {
+        "tags": [
+          "contact-resource"
+        ],
+        "operationId": "listAll",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactDTO"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 180,
+                    "firstName": "Tom",
+                    "lastName": "Bush",
+                    "phoneNumber": "2342342342"
+                  },
+                  {
+                    "id": 181,
+                    "firstName": "diogo",
+                    "lastName": "longo",
+                    "phoneNumber": "2342342341"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "contact-resource"
+        ],
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactDTO"
+                },
+                "example": {
+                  "id": 10,
+                  "firstName": "Diogo",
+                  "lastName": "Longo",
+                  "phoneNumber": "1112223333"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contacts/filter": {
+      "get": {
+        "tags": [
+          "contact-resource"
+        ],
+        "operationId": "listAllFiltered",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactDTO"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 180,
+                    "firstName": "Tom",
+                    "lastName": "Bush",
+                    "phoneNumber": "2342342342"
+                  },
+                  {
+                    "id": 181,
+                    "firstName": "diogo",
+                    "lastName": "longo",
+                    "phoneNumber": "2342342341"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ContactDTO": {
+        "required": [
+          "firstName",
+          "lastName",
+          "phoneNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "firstName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "lastName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "phoneNumber": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "",
+    "version": ""
   }
 }
