@@ -1,0 +1,20 @@
+<form *ngIf="contact" name="deleteForm" (ngSubmit)="confirmDelete(contact.id!)">
+  <div class="modal-header">
+    <h4 class="modal-title" >Confirm exclusion</h4>
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="modalRef.hide()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    Are you sure you want to delete {{contact.firstName}} {{contact.lastName}} ?
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modalRef.hide()">
+      <span >Cancel</span>
+    </button>
+
+    <button type="submit" class="btn btn-danger">
+      <span >Confirm</span>
+    </button>
+  </div>
+</form>
