@@ -46,9 +46,7 @@ public class ContactService {
 
     public Contact create(Contact contact) {
         log.info("Creating contact for {}", contact.toString());
-        Contact contactPhoneOnly = new Contact();
-        contactPhoneOnly.setPhoneNumber(contact.getPhoneNumber());
-        checkDuplicated(contactPhoneOnly);
+        checkDuplicated(contact);
         return this.contactRepository.save(contact);
     }
 
