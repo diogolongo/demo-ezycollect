@@ -1,7 +1,7 @@
 Address Book APP built with Spring Boot 3 with Angular 15
 -----
 
-The application is built with java 17, spring boot 3, angular 15, docker, node 18 and maven 3
+The application is built with java 17, spring boot 3, angular 15, docker/test containers, node 18 and maven 3
 
 install Java using [Jabba](https://github.com/Jabba-Team/jabba) or [SDKMan] (https://github.com/sdkman/sdkman-cli) or manual
 
@@ -11,15 +11,17 @@ Install [Maven](https://maven.apache.org/) or use IDE maven builtin
 
 Install [Docker](https://www.docker.com/)
 
+
+To run tests (this steps runs test containers to provide mysql):
+````
+mvn test
+````
+
+
 start the database:
 
 ````
 docker compose up
-````
-
-To run tests:
-````
-mvn test
 ````
 
 To run the app:
